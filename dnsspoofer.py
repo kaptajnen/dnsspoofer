@@ -18,7 +18,7 @@ def get_response(data, spoofs, spoof_all):
 		print('Spoofing query for %s due to spoof all' % domain)
 		rrset = from_text(message.question[0].name, 300, dns.rdataclass.IN, dns.rdatatype.A, spoof_all)
 	else:
-		print('Not spoofing query for %s' % domain)
+		print('Not spoofing %s query for %s' % (dns.rdatatype.to_text(message.question[0].rdtype), domain))
 		resolver = Resolver()
 		rrset = resolver.query(message.question[0].name, message.question[0].rdtype, message.question[0].rdclass).rrset
 
