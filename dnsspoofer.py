@@ -14,7 +14,7 @@ def get_response(data, spoofs, spoof_all):
 	if spoofs and message.question[0].rdtype == dns.rdatatype.A and domain in spoofs:
 		print('Spoofing query for %s' % domain)
 		rrset = from_text(message.question[0].name, 300, dns.rdataclass.IN, dns.rdatatype.A, spoofs[domain])
-	elif spoof_all:
+	elif spoof_all and message.question[0].rdtype == dns.rdatatype.A:
 		print('Spoofing query for %s due to spoof all' % domain)
 		rrset = from_text(message.question[0].name, 300, dns.rdataclass.IN, dns.rdatatype.A, spoof_all)
 	else:
