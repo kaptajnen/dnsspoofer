@@ -20,9 +20,15 @@ def get_response(data, spoofs, spoof_all):
 	else:
 		print('Not spoofing %s query for %s' % (dns.rdatatype.to_text(message.question[0].rdtype), domain))
 		resolver = Resolver()
-		rrset = resolver.query(message.question[0].name, message.question[0].rdtype, message.question[0].rdclass).rrset
+		try:
+			rrset = resolver.query(message.question[0].name, message.question[0].rdtype, message.question[0].rdclass).rrset
+		except dns.resolver.NXDOMAIN:
+			response.set_rcode(dns.rcode.NXDOMAIN)
+		except dns.resolver.NoAnswer:
+			response.set_rcode(dns.rcode.NOERROR)
 
-	response.answer.append(rrset)
+	if rrset:
+		response.answer.append(rrset)
 
 	return response
 
