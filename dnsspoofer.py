@@ -42,6 +42,7 @@ if __name__ == '__main__':
 		args = parser.parse_args()
 		s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 		s.bind(('',53))
+		print('Server started')
 
 		try:
 			while True:
